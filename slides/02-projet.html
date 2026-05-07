@@ -58,16 +58,178 @@
 <div class="s">
   <div class="orb orb-1"></div><div class="orb orb-2"></div>
   <div style="position:relative;z-index:1;">
-    <div class="chip">Composant IA</div>
+    <div class="chip">Composant IA · 1/2</div>
     <div class="slide-h">Caméra <span>Connectée</span></div>
   </div>
-  <div class="card">
-    <p>Basé sur <strong>MediaPipe Pose Landmarker</strong>, le module de caméra IA permet :</p>
-    <ul>
-      <li>Détecter les points clés du corps en temps réel</li>
-      <li>Evaluer la qualité des mouvements effectués</li>
-      <li>Fournir un feedback correctif immédiat à l'utilisateur</li>
-    </ul>
+  <div class="ia-split">
+    <!-- LEFT: Skeleton SVG -->
+    <div class="ia-skeleton-card">
+      <div class="ia-sk-label">33 landmarks détectés</div>
+      <svg class="ia-skeleton" viewBox="0 0 220 360" xmlns="http://www.w3.org/2000/svg">
+        <!-- Connections (lines between landmarks) -->
+        <g stroke="rgba(167,139,250,.55)" stroke-width="2" stroke-linecap="round" fill="none">
+          <!-- Face -->
+          <line x1="100" y1="42" x2="120" y2="42"/>
+          <!-- Shoulders -->
+          <line x1="75" y1="95" x2="145" y2="95"/>
+          <!-- Torso -->
+          <line x1="75" y1="95" x2="80" y2="180"/>
+          <line x1="145" y1="95" x2="140" y2="180"/>
+          <line x1="80" y1="180" x2="140" y2="180"/>
+          <!-- Left arm -->
+          <line x1="75" y1="95" x2="55" y2="150"/>
+          <line x1="55" y1="150" x2="50" y2="210"/>
+          <line x1="50" y1="210" x2="45" y2="240"/>
+          <!-- Right arm -->
+          <line x1="145" y1="95" x2="165" y2="150"/>
+          <line x1="165" y1="150" x2="170" y2="210"/>
+          <line x1="170" y1="210" x2="175" y2="240"/>
+          <!-- Left leg -->
+          <line x1="80" y1="180" x2="78" y2="260"/>
+          <line x1="78" y1="260" x2="75" y2="330"/>
+          <!-- Right leg -->
+          <line x1="140" y1="180" x2="142" y2="260"/>
+          <line x1="142" y1="260" x2="145" y2="330"/>
+        </g>
+        <!-- Head -->
+        <circle cx="110" cy="32" r="22" fill="rgba(167,139,250,.10)" stroke="rgba(167,139,250,.55)" stroke-width="2"/>
+        <!-- Landmarks (33 points) -->
+        <g fill="#c4b5fd">
+          <!-- Face: nose, eyes, ears, mouth -->
+          <circle cx="110" cy="28" r="2.5"/>
+          <circle cx="103" cy="22" r="2.5"/>
+          <circle cx="117" cy="22" r="2.5"/>
+          <circle cx="98" cy="24" r="2.5"/>
+          <circle cx="122" cy="24" r="2.5"/>
+          <circle cx="90" cy="32" r="2.5"/>
+          <circle cx="130" cy="32" r="2.5"/>
+          <circle cx="100" cy="42" r="2.5"/>
+          <circle cx="120" cy="42" r="2.5"/>
+          <circle cx="106" cy="48" r="2.5"/>
+          <circle cx="114" cy="48" r="2.5"/>
+          <!-- Shoulders -->
+          <circle cx="75" cy="95" r="3.5" fill="#a78bfa"/>
+          <circle cx="145" cy="95" r="3.5" fill="#a78bfa"/>
+          <!-- Elbows -->
+          <circle cx="55" cy="150" r="3.5" fill="#a78bfa"/>
+          <circle cx="165" cy="150" r="3.5" fill="#a78bfa"/>
+          <!-- Wrists -->
+          <circle cx="50" cy="210" r="3.5" fill="#a78bfa"/>
+          <circle cx="170" cy="210" r="3.5" fill="#a78bfa"/>
+          <!-- Pinky / Index / Thumb (left) -->
+          <circle cx="42" cy="232" r="2.5"/>
+          <circle cx="48" cy="245" r="2.5"/>
+          <circle cx="45" cy="240" r="2.5"/>
+          <!-- Pinky / Index / Thumb (right) -->
+          <circle cx="178" cy="232" r="2.5"/>
+          <circle cx="172" cy="245" r="2.5"/>
+          <circle cx="175" cy="240" r="2.5"/>
+          <!-- Hips -->
+          <circle cx="80" cy="180" r="3.5" fill="#a78bfa"/>
+          <circle cx="140" cy="180" r="3.5" fill="#a78bfa"/>
+          <!-- Knees -->
+          <circle cx="78" cy="260" r="3.5" fill="#a78bfa"/>
+          <circle cx="142" cy="260" r="3.5" fill="#a78bfa"/>
+          <!-- Ankles -->
+          <circle cx="75" cy="330" r="3.5" fill="#a78bfa"/>
+          <circle cx="145" cy="330" r="3.5" fill="#a78bfa"/>
+          <!-- Heel + Foot index (left) -->
+          <circle cx="68" cy="345" r="2.5"/>
+          <circle cx="82" cy="348" r="2.5"/>
+          <!-- Heel + Foot index (right) -->
+          <circle cx="152" cy="345" r="2.5"/>
+          <circle cx="138" cy="348" r="2.5"/>
+        </g>
+        <!-- Angle indicator on knee (squat example) -->
+        <g>
+          <path d="M 80 235 A 18 18 0 0 0 78 280" stroke="#86efac" stroke-width="2" fill="none"/>
+          <text x="58" y="262" font-family="Outfit" font-size="11" fill="#86efac" font-weight="700">95°</text>
+        </g>
+      </svg>
+      <div class="ia-sk-foot">Squelette détecté en temps réel</div>
+    </div>
+
+    <!-- RIGHT: explanation -->
+    <div class="ia-info">
+      <div class="ia-info-block">
+        <div class="ia-info-k">Qu'est-ce que c'est ?</div>
+        <p><strong>MediaPipe Pose Landmarker</strong> est un modèle de vision par ordinateur <strong>open-source</strong> développé par <strong>Google AI Edge</strong>.</p>
+      </div>
+      <div class="ia-info-block">
+        <div class="ia-info-k">Que fait-il ?</div>
+        <p>Détecte <strong>33 points clés du corps</strong> (épaules, coudes, hanches, genoux…) à <strong>30 fps</strong>, avec un score de confiance par point.</p>
+      </div>
+      <div class="ia-info-pills">
+        <span class="ia-pill">⚡ Temps réel</span>
+        <span class="ia-pill">📱 100% on-device</span>
+        <span class="ia-pill">🔒 Données privées</span>
+        <span class="ia-pill">✈️ Mode avion OK</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-3"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Composant IA · 2/2</div>
+    <div class="slide-h">Le <span>Pipeline</span> dans Mindiff</div>
+  </div>
+
+  <!-- Pipeline 5 steps -->
+  <div class="ia-pipeline">
+    <div class="ia-step">
+      <div class="ia-step-num">1</div>
+      <div class="ia-step-ico">📷</div>
+      <div class="ia-step-title">Capture</div>
+      <div class="ia-step-desc">Flux caméra Flutter (package <code>camera</code>)</div>
+    </div>
+    <div class="ia-arrow">→</div>
+    <div class="ia-step">
+      <div class="ia-step-num">2</div>
+      <div class="ia-step-ico">🧠</div>
+      <div class="ia-step-title">Détection</div>
+      <div class="ia-step-desc">MediaPipe Pose → 33 landmarks (x, y, confiance)</div>
+    </div>
+    <div class="ia-arrow">→</div>
+    <div class="ia-step">
+      <div class="ia-step-num">3</div>
+      <div class="ia-step-ico">📐</div>
+      <div class="ia-step-title">Calcul</div>
+      <div class="ia-step-desc">Angles articulaires (genou, hanche, coude…)</div>
+    </div>
+    <div class="ia-arrow">→</div>
+    <div class="ia-step">
+      <div class="ia-step-num">4</div>
+      <div class="ia-step-ico">🔄</div>
+      <div class="ia-step-title">Analyse</div>
+      <div class="ia-step-desc">Machine à états : phase + comptage des reps</div>
+    </div>
+    <div class="ia-arrow">→</div>
+    <div class="ia-step">
+      <div class="ia-step-num">5</div>
+      <div class="ia-step-ico">🔊</div>
+      <div class="ia-step-title">Feedback</div>
+      <div class="ia-step-desc">Squelette + conseils vocaux (TTS)</div>
+    </div>
+  </div>
+
+  <!-- Bottom: integration footer -->
+  <div class="ia-foot">
+    <div class="ia-foot-block">
+      <div class="ia-foot-k">Intégration Flutter</div>
+      <div class="ia-foot-v">package <code>google_mlkit_pose_detection</code></div>
+    </div>
+    <div class="ia-foot-block">
+      <div class="ia-foot-k">Exercices supportés</div>
+      <div class="ia-foot-v">9 analyseurs · Squat · Pompe · Planche · Curl…</div>
+    </div>
+    <div class="ia-foot-block">
+      <div class="ia-foot-k">Filtre qualité</div>
+      <div class="ia-foot-v">Confiance &gt; 70% sur points clés</div>
+    </div>
   </div>
 </div>
 </section>
@@ -87,7 +249,7 @@
     </ul></div>
     <div class="card"><ul>
       <li>Menu personnalisé pour chaque profil</li>
-      <li>Intégration camera IA (coaching en direct)</li>
+      <li>Intégration caméra IA (coaching en direct)</li>
       <li>Connexion balance connectée</li>
     </ul></div>
   </div>
