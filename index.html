@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINDIFF – ESP 902</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<style>
+:root {
+  --bg:       #0d0b14;
+  --bg2:      #13101f;
+  --surface:  rgba(255,255,255,0.04);
+  --border:   rgba(167,139,250,0.18);
+  --purple:   #a78bfa;
+  --purple2:  #c4b5fd;
+  --purple3:  #7c6fcd;
+  --purple4:  #6d58e8;
+  --accent:   #e0d7ff;
+  --muted:    rgba(196,181,253,0.45);
+  --text:     #e8e4f5;
+  --text2:    rgba(232,228,245,0.6);
+  --glow:     0 0 60px rgba(167,139,250,0.15);
+}
+
+/* ── BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.reveal {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+.reveal .slides { text-align: left; }
+.reveal h1,.reveal h2,.reveal h3,.reveal h4 {
+  font-family: 'Outfit', sans-serif;
+  text-transform: none;
+  letter-spacing: -.03em;
+  color: var(--accent);
+  line-height: 1.1;
+}
+
+/* ── BACKGROUND NOISE TEXTURE ── */
+.reveal::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: .4;
+  pointer-events: none;
+}
+
+.reveal section {
+  padding: 0 !important;
+  height: 100%;
+}
+
+/* ── SLIDE WRAPPER ── */
+.s {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px 72px;
+}
+
+/* ── AMBIENT GLOW ORBS ── */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: .35;
+}
+.orb-1 { width: 380px; height: 380px; top: -120px; left: -80px; background: radial-gradient(circle, #7c6fcd 0%, transparent 70%); }
+.orb-2 { width: 280px; height: 280px; bottom: -80px; right: -60px; background: radial-gradient(circle, #a78bfa 0%, transparent 70%); }
+.orb-3 { width: 200px; height: 200px; top: 40%; right: 10%; background: radial-gradient(circle, #c4b5fd 0%, transparent 70%); opacity: .18; }
+
+/* ── CHIP / LABEL ── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  background: rgba(167,139,250,.12);
+  border: 1px solid rgba(167,139,250,.3);
+  color: var(--purple2);
+  font-family: 'Outfit', sans-serif;
+  font-size: .6em;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .35em 1em;
+  border-radius: 100px;
+  margin-bottom: .9em;
+}
+.chip::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--purple); display: block; }
+
+/* ── GLASS CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.4em 1.6em;
+  backdrop-filter: blur(12px);
+}
+.card + .card { margin-top: .7em; }
+
+/* ── LISTS ── */
+.card ul { list-style: none; padding: 0; margin: .5em 0 0 0; }
+.card ul li {
+  font-size: .78em;
+  color: var(--text2);
+  padding: .35em 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  display: flex;
+  align-items: flex-start;
+  gap: .7em;
+  line-height: 1.5;
+}
+.card ul li:last-child { border: none; }
+.card ul li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--purple); margin-top: .5em; flex-shrink: 0; }
+.card p { font-size: .8em; color: var(--text2); line-height: 1.65; margin: .3em 0; }
+.card strong { color: var(--purple2); font-weight: 600; }
+
+/* ── HEADING IN SLIDE ── */
+.slide-h {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.85em;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -.04em;
+  margin-bottom: .55em;
+  position: relative;
+  z-index: 1;
+}
+.slide-h span { color: var(--purple); }
+
+/* ══════════════════════════
+   1. TITLE SLIDE
+══════════════════════════ */
+.slide-title {
+  background: var(--bg);
+  justify-content: flex-end;
+  padding-bottom: 72px;
+}
+.slide-title .logo-mark {
+  position: absolute;
+  top: 52px; left: 72px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 1.1em;
+  color: var(--purple2);
+  letter-spacing: -.05em;
+  z-index: 2;
+}
+.slide-title .epitech-tag {
+  position: absolute;
+  top: 52px; right: 72px;
+  font-size: .55em;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  z-index: 2;
+  border: 1px solid var(--border);
+  padding: .4em .9em;
+  border-radius: 8px;
+}
+.slide-title h1 {
+  font-size: 5.5em;
+  font-weight: 900;
+  line-height: .95;
+  position: relative;
+  z-index: 2;
+}
+.slide-title h1 .dim { color: var(--muted); font-weight: 300; }
+.slide-title .team-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3em .8em;
+  margin-top: 1.2em;
+  position: relative;
+  z-index: 2;
+}
+.slide-title .team-row span {
+  font-size: .62em;
+  color: var(--text2);
+  font-family: 'Plus Jakarta Sans';
+}
+.slide-title .orb-1 { opacity: .5; }
+
+/* ══════════════════════════
+   2. SOMMAIRE
+══════════════════════════ */
+.sommaire-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .45em;
+  position: relative;
+  z-index: 1;
+}
+.som-item {
+  display: flex;
+  align-items: center;
+  gap: .8em;
+  padding: .6em .9em;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+  transition: border-color .2s;
+}
+.som-num {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: .75em;
+  color: var(--purple);
+  min-width: 24px;
+  opacity: .8;
+}
+.som-label {
+  font-size: .72em;
+  color: var(--text2);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* ══════════════════════════
+   TEAM GRID
+══════════════════════════ */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .6em;
+  position: relative;
+  z-index: 1;
+}
+.t-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: .9em .8em;
+  text-align: center;
+}
+.t-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple4), var(--purple));
+  margin: 0 auto .5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+}
+.t-card strong {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: .72em;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: .2em;
+}
+.t-card span {
+  font-size: .62em;
+  color: var(--muted);
+}
+
+/* ══════════════════════════
+   RISK TABLE
+══════════════════════════ */
+.rtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .58em;
+  position: relative;
+  z-index: 1;
+}
+.rtable thead tr th {
+  background: rgba(167,139,250,.12);
+  color: var(--purple2);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+  padding: .6em .8em;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.rtable tbody tr td {
+  padding: .5em .8em;
+  color: var(--text2);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.rtable tbody tr:hover td { background: rgba(167,139,250,.05); }
+.bd { display: inline-block; padding: .15em .55em; border-radius: 6px; font-weight: 600; font-size: .9em; }
+.bd-h { background: rgba(248,113,113,.12); color: #fca5a5; border: 1px solid rgba(248,113,113,.2); }
+.bd-m { background: rgba(251,191,36,.1);  color: #fde68a; border: 1px solid rgba(251,191,36,.2); }
+.bd-l { background: rgba(52,211,153,.1);  color: #6ee7b7; border: 1px solid rgba(52,211,153,.2); }
+
+/* ══════════════════════════
+   CONCURRENCE
+══════════════════════════ */
+.ctable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .67em;
+  position: relative;
+  z-index: 1;
+}
+.ctable thead th {
+  background: rgba(167,139,250,.1);
+  color: var(--purple2);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  padding: .6em .9em;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.ctable thead th:first-child { text-align: left; }
+.ctable tbody td {
+  padding: .5em .9em;
+  color: var(--text2);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  text-align: center;
+}
+.ctable tbody td:first-child { text-align: left; font-weight: 500; color: var(--text); }
+.ctable tbody tr:last-child td {
+  background: rgba(167,139,250,.08);
+  color: var(--purple2);
+  font-weight: 600;
+}
+.yes { color: #86efac; }
+.no  { color: rgba(255,255,255,.2); }
+
+/* ══════════════════════════
+   ADVANTAGES
+══════════════════════════ */
+.adv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8em;
+  position: relative;
+  z-index: 1;
+}
+.adv-item {
+  background: linear-gradient(135deg, rgba(124,111,205,.2), rgba(167,139,250,.08));
+  border: 1px solid rgba(167,139,250,.25);
+  border-radius: 20px;
+  padding: 1.6em 1.4em;
+  display: flex;
+  align-items: center;
+  gap: .9em;
+}
+.adv-icon {
+  font-size: 1.6em;
+  flex-shrink: 0;
+}
+.adv-item p {
+  font-family: 'Outfit', sans-serif;
+  font-size: .82em;
+  font-weight: 600;
+  color: var(--purple2);
+  line-height: 1.3;
+}
+
+/* ══════════════════════════
+   JURIDIQUE
+══════════════════════════ */
+.jur-grid {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr;
+  gap: .6em;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.jur-problem {
+  background: rgba(248,113,113,.06);
+  border: 1px solid rgba(248,113,113,.2);
+  border-radius: 16px;
+  padding: 1em 1.1em;
+}
+.jur-problem h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: .8em;
+  font-weight: 700;
+  color: #fca5a5;
+  margin-bottom: .5em;
+}
+.jur-solution {
+  background: rgba(134,239,172,.06);
+  border: 1px solid rgba(134,239,172,.2);
+  border-radius: 16px;
+  padding: 1em 1.1em;
+}
+.jur-solution h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: .8em;
+  font-weight: 700;
+  color: #86efac;
+  margin-bottom: .5em;
+}
+.jur-problem ul, .jur-solution ul { list-style: none; padding: 0; }
+.jur-problem ul li, .jur-solution ul li {
+  font-size: .72em;
+  color: var(--text2);
+  padding: .25em 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  display: flex; gap: .5em;
+}
+.jur-problem ul li::before { content:'•'; color:#fca5a5; flex-shrink:0; }
+.jur-solution ul li::before { content:'→'; color:#86efac; flex-shrink:0; }
+.jur-problem ul li:last-child, .jur-solution ul li:last-child { border: none; }
+.arrow-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4em;
+  color: var(--purple);
+  opacity: .6;
+}
+
+/* ══════════════════════════
+   TECH
+══════════════════════════ */
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .7em;
+  position: relative;
+  z-index: 1;
+}
+.tech-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1em 1.2em;
+  display: flex;
+  align-items: center;
+  gap: .9em;
+}
+.tech-item .ico { font-size: 1.8em; flex-shrink: 0; }
+.tech-item h4 { font-family:'Outfit';font-size:.82em;font-weight:700;color:var(--accent);margin-bottom:.15em; }
+.tech-item p { font-size:.7em;color:var(--muted); }
+
+/* ══════════════════════════
+   USER TABLE
+══════════════════════════ */
+.user-t { width:100%;border-collapse:collapse;font-size:.75em;position:relative;z-index:1; }
+.user-t th { background:rgba(167,139,250,.1);color:var(--purple2);font-family:'Outfit';font-weight:600;padding:.6em .9em;text-align:left;border-bottom:1px solid var(--border); }
+.user-t td { padding:.55em .9em;color:var(--text2);border-bottom:1px solid rgba(255,255,255,.04); }
+.user-t td:first-child { color:var(--accent);font-weight:500; }
+.user-t td:last-child { color:var(--purple2);font-weight:700;font-family:'Outfit';font-size:.9em; }
+
+/* ══════════════════════════
+   COLOR SWATCHES
+══════════════════════════ */
+.swatches { display:flex;gap:.5em;margin-top:.5em; }
+.sw { width:36px;height:36px;border-radius:10px; }
+
+/* ══════════════════════════
+   SECTION DIVIDER
+══════════════════════════ */
+.slide-divider {
+  align-items: center;
+  justify-content: center;
+}
+.divider-content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.divider-content h2 {
+  font-size: 3em;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.divider-content .num {
+  font-size: .65em;
+  color: var(--purple);
+  font-weight: 700;
+  letter-spacing: .15em;
+  margin-bottom: .5em;
+  display: block;
+}
+
+/* ══════════════════════════
+   MERCI
+══════════════════════════ */
+.slide-merci {
+  align-items: center;
+  justify-content: center;
+}
+.merci-h {
+  font-size: 7em;
+  font-weight: 900;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, var(--purple2), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ══════════════════════════
+   DEMO
+══════════════════════════ */
+.demo-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.5em;
+  font-weight: 900;
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--purple2), var(--purple));
+  padding: .35em 1.2em;
+  border-radius: 100px;
+  letter-spacing: .06em;
+}
+
+/* ══════════════════════════
+   PROGRESS & CONTROLS
+══════════════════════════ */
+.reveal .controls { color: var(--purple); }
+.reveal .progress span { background: var(--purple2); }
+.reveal .slide-number {
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: .55em;
+  background: transparent;
+  bottom: 18px; right: 24px;
+}
+
+/* ══════════════════════════
+   FRAGMENTS
+══════════════════════════ */
+.reveal .fragment {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.reveal .fragment.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ══════════════════════════
+   MOQUETTE
+══════════════════════════ */
+.mock-grid {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: .5em;
+  position: relative;
+  z-index: 1;
+}
+.mock-screen {
+  background: #1a1730;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: .6em .5em;
+  font-size: .52em;
+}
+.mock-screen .mtitle { font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;font-size:1.1em; }
+.mock-row { background: rgba(167,139,250,.08);border-radius:6px;padding:.3em .4em;margin-bottom:.25em;color:var(--text2);font-size:.9em; }
+
+/* Two-col layout */
+.two-col { display:grid;grid-template-columns:1fr 1fr;gap:1.2em;position:relative;z-index:1; }
+.two-col-3 { display:grid;grid-template-columns:1fr 2fr;gap:1.2em;position:relative;z-index:1; }
+
+/* Methodology */
+.meth-pair {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: .8em;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.meth-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.2em 1.4em;
+}
+.meth-card h3 { font-family:'Outfit';font-size:1em;font-weight:700;color:var(--purple2);margin-bottom:.4em; }
+.meth-card p { font-size:.75em;color:var(--text2);line-height:1.55; }
+.meth-plus { font-size:1.8em;font-weight:900;color:var(--purple);opacity:.7;text-align:center; }
+.kanban-mini { display:grid;grid-template-columns:repeat(4,1fr);gap:.4em;margin-top:.7em; }
+.kc { border-radius:8px;padding:.4em .4em; }
+.kc-h { font-family:'Outfit';font-size:.6em;font-weight:700;text-align:center;margin-bottom:.3em;text-transform:uppercase;letter-spacing:.07em; }
+.kc-card { border-radius:5px;padding:.25em .35em;font-size:.55em;margin-bottom:.2em;color:rgba(255,255,255,.7); }
+.kc-1 { background:rgba(248,113,113,.08); } .kc-1 .kc-h { color:#fca5a5; } .kc-1 .kc-card { background:rgba(248,113,113,.1); }
+.kc-2 { background:rgba(251,191,36,.06); } .kc-2 .kc-h { color:#fde68a; } .kc-2 .kc-card { background:rgba(251,191,36,.1); }
+.kc-3 { background:rgba(96,165,250,.07); } .kc-3 .kc-h { color:#93c5fd; } .kc-3 .kc-card { background:rgba(96,165,250,.1); }
+.kc-4 { background:rgba(52,211,153,.07); } .kc-4 .kc-h { color:#6ee7b7; } .kc-4 .kc-card { background:rgba(52,211,153,.1); }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ── 1. TITLE ── -->
+<section>
+<div class="s slide-title">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="logo-mark">ᴍD</div>
+  <div class="epitech-tag">EPITECH</div>
+  <div style="position:relative;z-index:2;">
+    <div class="chip">Projet de fin d'année · ESP 902</div>
+    <h1>MIND<span class="dim">IFF</span></h1>
+    <div class="team-row">
+      <span>Supiot Balthazar</span><span style="color:var(--border)">·</span>
+      <span>Rivassou Garance</span><span style="color:var(--border)">·</span>
+      <span>Angelo Alexis</span><span style="color:var(--border)">·</span>
+      <span>Parthiot Audran</span><span style="color:var(--border)">·</span>
+      <span>Garde Nicolas</span><span style="color:var(--border)">·</span>
+      <span>Marin Swan</span><span style="color:var(--border)">·</span>
+      <span>Rocolle Clément</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── 2. SOMMAIRE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Navigation</div>
+    <div class="slide-h">Sommaire</div>
+  </div>
+  <div class="sommaire-list">
+    <div class="som-item"><span class="som-num">01</span><span class="som-label">Présentation du projet</span></div>
+    <div class="som-item"><span class="som-num">02</span><span class="som-label">Nos équipes</span></div>
+    <div class="som-item"><span class="som-num">03</span><span class="som-label">Notre méthodologie</span></div>
+    <div class="som-item"><span class="som-num">04</span><span class="som-label">Choix des technologies</span></div>
+    <div class="som-item"><span class="som-num">05</span><span class="som-label">Charte graphique</span></div>
+    <div class="som-item"><span class="som-num">06</span><span class="som-label">Risques & Concurrence</span></div>
+    <div class="som-item"><span class="som-num">07</span><span class="som-label">Juridique</span></div>
+    <div class="som-item"><span class="som-num">08</span><span class="som-label">Reste à faire & Évolution</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ── 3. PRÉSENTATION DU PROJET ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-3"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">01 · Présentation</div>
+    <div class="slide-h">Le Projet <span>Mindiff</span></div>
+  </div>
+  <div class="card">
+    <p>Mindiff est une <strong>application mobile d'accompagnement sportif</strong> utilisant l'intelligence artificielle capable d'analyser les mouvements de l'utilisateur via la caméra.</p>
+    <p>L'application propose des exercices adaptés au profil de l'utilisateur et suit ses progrès pour améliorer sa performance.</p>
+  </div>
+  <div class="two-col" style="margin-top:.7em;">
+    <div class="card"><ul>
+      <li>Analyse IA des mouvements en temps réel</li>
+      <li>Exercices personnalisés selon le profil</li>
+      <li>Suivi de progression intégré</li>
+    </ul></div>
+    <div class="card"><ul>
+      <li>Balance connectée (mesure corporelle)</li>
+      <li>Caméra intelligente via MediaPipe</li>
+      <li>Application mobile Flutter iOS & Android</li>
+    </ul></div>
+  </div>
+</div>
+</section>
+
+<!-- ── 4. BALANCE – OBJECTIFS ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Composant IoT</div>
+    <div class="slide-h">La Balance <span>Connectée</span></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;">Objectifs</p>
+      <ul>
+        <li>Mesurer la masse d'une personne (30 à 200 kg)</li>
+        <li>Affichage sur écran embarqué de la balance</li>
+        <li>Transmission des données vers l'app Mindiff</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;">Planification</p>
+      <ul>
+        <li>Choix du matériel électronique</li>
+        <li>Réalisation du schéma électrique</li>
+        <li>Câblage et assemblage</li>
+        <li>Développement communication balance ↔ app</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── 5. CAMÉRA ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Composant IA</div>
+    <div class="slide-h">Caméra <span>Connectée</span></div>
+  </div>
+  <div class="card">
+    <p>Basé sur <strong>MediaPipe Pose Landmarker</strong>, le module de caméra IA permet :</p>
+    <ul>
+      <li>Détecter les points clés du corps en temps réel</li>
+      <li>Évaluer la qualité des mouvements effectués</li>
+      <li>Fournir un feedback correctif immédiat à l'utilisateur</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- ── 6. APP MOBILE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Application</div>
+    <div class="slide-h">L'Application <span>Mobile</span></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><ul>
+      <li>Connexion & Inscription utilisateur</li>
+      <li>Programmes d'entraînement personnalisés</li>
+      <li>Suivi des performances dans le temps</li>
+    </ul></div>
+    <div class="card"><ul>
+      <li>Menu personnalisé pour chaque profil</li>
+      <li>Intégration caméra IA (coaching live)</li>
+      <li>Connexion balance connectée</li>
+    </ul></div>
+  </div>
+</div>
+</section>
+
+<!-- ── 7. ÉQUIPE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">02 · Équipe</div>
+    <div class="slide-h">Notre <span>Équipe</span></div>
+  </div>
+  <div class="team-grid">
+    <div class="t-card"><div class="t-avatar">⚖️</div><strong>Alexis Angelo</strong><span>Balance connectée</span></div>
+    <div class="t-card"><div class="t-avatar">⚖️</div><strong>Balthazar Suppiot</strong><span>Balance connectée</span></div>
+    <div class="t-card"><div class="t-avatar">🎥</div><strong>Swan Marin</strong><span>Caméra connectée</span></div>
+    <div class="t-card"><div class="t-avatar">📱</div><strong>Garance Rivassou</strong><span>Application mobile</span></div>
+    <div class="t-card"><div class="t-avatar">📱</div><strong>Audran Parthiot</strong><span>Application mobile</span></div>
+    <div class="t-card"><div class="t-avatar">📱</div><strong>Nicolas Garde</strong><span>Application mobile</span></div>
+    <div class="t-card"><div class="t-avatar">📱</div><strong>Clément Rocolle</strong><span>Application mobile</span></div>
+    <div class="t-card" style="background:rgba(167,139,250,.08);border-style:dashed;display:flex;align-items:center;justify-content:center;"><span style="color:var(--muted);font-size:.7em;">…En évolution</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ── 8. ÉVOLUTION ÉQUIPE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Gestion RH</div>
+    <div class="slide-h">...En <span>Évolution</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:1em;align-items:center;position:relative;z-index:1;margin-bottom:.8em;">
+    <div class="card" style="text-align:center;">
+      <p style="color:#fca5a5;font-weight:600;font-size:.85em;">Départ d'un membre</p>
+    </div>
+    <div style="font-size:1.8em;color:var(--purple);opacity:.7;">→</div>
+    <div class="card" style="text-align:center;">
+      <p style="color:#86efac;font-weight:600;font-size:.85em;">Remplacement immédiat par un autre membre</p>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;">
+    <p style="font-family:'Outfit';font-weight:700;font-size:1.1em;color:var(--purple2);">3 Documents d'intégration différents</p>
+    <p style="margin-top:.3em;font-style:italic;">« Bienvenue chez Mindiff ! »</p>
+  </div>
+</div>
+</section>
+
+<!-- ── 9. MÉTHODOLOGIE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">03 · Organisation</div>
+    <div class="slide-h">Notre <span>Méthodologie</span></div>
+  </div>
+  <div class="meth-pair">
+    <div class="meth-card">
+      <h3>🔄 Agile / Sprints</h3>
+      <p>Itérations en 3 sprints successifs avec livraisons régulières. Ligne directrice commune, deadlines par équipe, découpage en tickets Jira.</p>
+    </div>
+    <div class="meth-plus">+</div>
+    <div class="meth-card">
+      <h3>📋 Kanban Board</h3>
+      <p>Tableau de suivi en temps réel par pôle. Documentation centralisée dans Confluence. Visibilité complète sur l'avancement.</p>
+    </div>
+  </div>
+  <div class="kanban-mini" style="margin-top:.7em;">
+    <div class="kc kc-1"><div class="kc-h">Backlog</div><div class="kc-card">Archi BDD</div><div class="kc-card">Diag. classe</div></div>
+    <div class="kc kc-2"><div class="kc-h">Doing</div><div class="kc-card">Analyse besoins</div><div class="kc-card">Maquettes finales</div></div>
+    <div class="kc kc-3"><div class="kc-h">Review</div><div class="kc-card">Archi logicielle</div><div class="kc-card">Comparatif balances</div></div>
+    <div class="kc kc-4"><div class="kc-h">Done</div><div class="kc-card">Doc technique</div><div class="kc-card">Choix techno</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── 10. TECHNOLOGIES ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">04 · Stack</div>
+    <div class="slide-h">Choix des <span>Technologies</span></div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-item"><div class="ico">💙</div><div><h4>Flutter</h4><p>Cross-Platform — iOS & Android unifiés</p></div></div>
+    <div class="tech-item"><div class="ico">🐘</div><div><h4>PostgreSQL</h4><p>Base de données relationnelle robuste</p></div></div>
+    <div class="tech-item"><div class="ico">🔗</div><div><h4>API REST / JSON</h4><p>Communication Flutter ↔ Backend</p></div></div>
+    <div class="tech-item"><div class="ico">🤖</div><div><h4>IA Embarquée</h4><p>MediaPipe Pose Landmarker + IoT</p></div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── 11. CHARTE GRAPHIQUE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">05 · Design</div>
+    <div class="slide-h">Charte <span>Graphique</span></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.5em;">Palette de couleurs</p>
+      <div class="swatches">
+        <div class="sw" style="background:#5B2EE8;" title="Primary"></div>
+        <div class="sw" style="background:#00C9A7;" title="Teal"></div>
+        <div class="sw" style="background:#FF6B6B;" title="Coral"></div>
+        <div class="sw" style="background:#333;" title="Dark"></div>
+        <div class="sw" style="background:#fff;border:1px solid rgba(255,255,255,.2);" title="White"></div>
+      </div>
+      <p style="margin-top:.8em;font-family:'Outfit';font-weight:700;color:var(--purple2);">Typographie</p>
+      <p style="font-size:1.2em;font-weight:800;color:var(--accent);line-height:1.2;margin-top:.3em;">Titre Moderne<br><span style="font-size:.6em;font-weight:400;color:var(--text2);">Corps — Clean, readable</span></p>
+    </div>
+    <div class="card">
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.5em;">UI Components</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.4em;">
+        <span style="background:#5B2EE8;color:#fff;border-radius:8px;padding:.25em .7em;font-size:.7em;font-family:'Outfit';font-weight:600;">Bouton Primary</span>
+        <span style="border:2px solid #5B2EE8;color:#5B2EE8;border-radius:8px;padding:.25em .7em;font-size:.7em;font-family:'Outfit';font-weight:600;background:transparent;">Outline</span>
+        <span style="background:rgba(91,46,232,.1);color:#a78bfa;border-radius:8px;padding:.25em .7em;font-size:.7em;font-family:'Outfit';">Ghost</span>
+      </div>
+      <div style="margin-top:.6em;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.4em .7em;display:flex;gap:.5em;align-items:center;">
+        <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#5B2EE8,#00C9A7);"></div>
+        <span style="font-size:.7em;color:var(--text2);">Thomas Martin · Lyon</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── 12. MAQUETTE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Design UI</div>
+    <div class="slide-h">La <span>Maquette</span></div>
+  </div>
+  <div class="mock-grid">
+    <div class="mock-screen"><div class="mtitle">Home</div><div class="mock-row">Score: 75/100</div><div class="mock-row">Programme du jour</div><div class="mock-row">▶ Démarrer</div></div>
+    <div class="mock-screen"><div class="mtitle">Register</div><div class="mock-row">Nom *</div><div class="mock-row">Email</div><div class="mock-row">Mot de passe</div></div>
+    <div class="mock-screen"><div class="mtitle">Profile</div><div class="mock-row">Âge: 28</div><div class="mock-row">Lyon, France</div><div class="mock-row">Objectif: −2 kg</div></div>
+    <div class="mock-screen"><div class="mtitle">Nutrition</div><div class="mock-row">1 800 / 3 000 cal</div><div class="mock-row">Petit-déj: 500</div><div class="mock-row">Déjeuner: 700</div></div>
+    <div class="mock-screen"><div class="mtitle">Metrics</div><div class="mock-row">Poids: 78 kg</div><div class="mock-row">Taille: 1 m 80</div><div class="mock-row">−2 % / 30 j</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── SECTION: RISQUES ── -->
+<section>
+<div class="s slide-divider">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <div class="divider-content">
+    <span class="num">06</span>
+    <h2>Études des Risques<br>&amp; Concurrence</h2>
+  </div>
+</div>
+</section>
+
+<!-- ── 13. MATRICE DES RISQUES ── -->
+<section>
+<div class="s" style="padding:32px 52px;">
+  <div class="orb orb-1"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Gestion des risques</div>
+    <div class="slide-h" style="font-size:1.5em;">Matrice des <span>Risques</span></div>
+  </div>
+  <table class="rtable">
+    <thead><tr><th>Catégorie</th><th>Risque</th><th>Proba.</th><th>Gravité</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:var(--purple2)">Techniques</strong></td><td>Fiabilité IA mouvements</td><td><span class="bd bd-m">Moy.</span></td><td><span class="bd bd-h">Élevée</span></td><td>Tests étendus, données diversifiées</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Techniques</strong></td><td>Compatibilité multi-appareils</td><td><span class="bd bd-h">Élevée</span></td><td><span class="bd bd-m">Moy.</span></td><td>Tests terminaux variés, Flutter</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Techniques</strong></td><td>Latence caméra</td><td><span class="bd bd-m">Moy.</span></td><td><span class="bd bd-m">Moy.</span></td><td>Optimisation modèle IA</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Fonctionnels</strong></td><td>Adhérence utilisateurs</td><td><span class="bd bd-h">Élevée</span></td><td><span class="bd bd-h">Élevée</span></td><td>Gamification, notifs motivantes</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Fonctionnels</strong></td><td>Contenus fiables</td><td><span class="bd bd-m">Moy.</span></td><td><span class="bd bd-h">Élevée</span></td><td>Collaboration pros sport/santé</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Juridiques</strong></td><td>Données santé / RGPD</td><td><span class="bd bd-m">Moy.</span></td><td><span class="bd bd-h">Élevée</span></td><td>Anonymisation, serveurs UE</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Juridiques</strong></td><td>Responsabilité blessure</td><td><span class="bd bd-l">Faible</span></td><td><span class="bd bd-h">Élevée</span></td><td>CGU précises, avertissements</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Stratégiques</strong></td><td>Concurrence fitness</td><td><span class="bd bd-h">Élevée</span></td><td><span class="bd bd-m">Moy.</span></td><td>Différenciation IA + connecté</td></tr>
+      <tr><td><strong style="color:var(--purple2)">Stratégiques</strong></td><td>Sous-estimation coûts</td><td><span class="bd bd-m">Moy.</span></td><td><span class="bd bd-h">Élevée</span></td><td>Budget réaliste, MVP first</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ── 14. SYNTHÈSE CONCURRENTIELLE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Benchmark</div>
+    <div class="slide-h">Synthèse <span>Concurrentielle</span></div>
+  </div>
+  <table class="ctable">
+    <thead>
+      <tr><th>Application</th><th>IA Mouvements</th><th>Suivi Stats</th><th>Caméra Live</th><th>Nutrition</th><th>Balance IoT</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Freeletics</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr><td>Fitify / Seven</td><td class="no">—</td><td>Basique</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr><td>Zenia</td><td>Yoga</td><td>Limité</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr><td>Kaia Health</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr><td>🏆 Mindiff</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ── 15. AVANTAGES ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Différenciation</div>
+    <div class="slide-h">Nos <span>Avantages</span></div>
+  </div>
+  <div class="adv-grid">
+    <div class="adv-item"><div class="adv-icon">🔭</div><p>Couverture fonctionnelle la plus large du marché</p></div>
+    <div class="adv-item"><div class="adv-icon">🔗</div><p>Intégration d'objets connectés (balance IoT)</p></div>
+    <div class="adv-item"><div class="adv-icon">⚡</div><p>Feedback correctif en temps réel via IA caméra</p></div>
+    <div class="adv-item"><div class="adv-icon">📈</div><p>Programmes adaptés sur une marge de progression personnalisée</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ── SECTION: JURIDIQUE ── -->
+<section>
+<div class="s slide-divider">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div class="divider-content">
+    <span class="num">07</span>
+    <h2>Risques<br>Juridiques</h2>
+  </div>
+</div>
+</section>
+
+<!-- ── 16. JURIDIQUE ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">07 · Juridique · Les plus risqués</div>
+    <div class="slide-h">Risques <span>Juridiques</span></div>
+  </div>
+  <div style="display:grid;gap:.7em;position:relative;z-index:1;">
+    <div class="jur-grid">
+      <div class="jur-problem">
+        <h4>⚠ Données biométriques & santé</h4>
+        <ul><li>Règlementation RGPD stricte et sensible</li><li>Stockage et protection des données</li><li>Vol et rançongiciel</li></ul>
+      </div>
+      <div class="arrow-col">→</div>
+      <div class="jur-solution">
+        <h4>✓ Solutions</h4>
+        <ul><li>Consentement explicite + anonymisation</li><li>Serveurs exclusivement en UE</li><li>Chiffrement, backup, PRA</li></ul>
+      </div>
+    </div>
+    <div class="jur-grid">
+      <div class="jur-problem">
+        <h4>⚠ Responsabilité</h4>
+        <ul><li>Conseils sur posture et blessures</li><li>Analyse corporelle par IA</li><li>Risque de qualification dispositif médical</li></ul>
+      </div>
+      <div class="arrow-col">→</div>
+      <div class="jur-solution">
+        <h4>✓ Solutions</h4>
+        <ul><li>Avertissement : appli ≠ conseils médicaux</li><li>Audit légal + documentation</li><li>Positionnement conseils sportifs uniquement</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── SECTION: RESTE À FAIRE ── -->
+<section>
+<div class="s slide-divider">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div class="divider-content">
+    <span class="num">08</span>
+    <h2>Reste à Faire<br>&amp; Évolution</h2>
+  </div>
+</div>
+</section>
+
+<!-- ── 17. SUIVI PROGRAMME ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Ce qu'il reste à faire</div>
+    <div class="slide-h">Suivi du <span>Programme</span></div>
+  </div>
+  <table class="user-t">
+    <thead><tr><th>Utilisateur</th><th>Description</th><th>Code</th></tr></thead>
+    <tbody>
+      <tr><td>Inscrit</td><td>Compte créé sans abonnement — peut créer un programme personnel</td><td>UI</td></tr>
+      <tr><td>Premium</td><td>Abonnement actif — accès à l'ensemble des fonctionnalités</td><td>UP</td></tr>
+      <tr><td>Non-Inscrit</td><td>Sans compte — accès au programme sportif de base uniquement</td><td>UNI</td></tr>
+    </tbody>
+  </table>
+  <div class="card" style="margin-top:.7em;">
+    <p>Le suivi des programmes a été retiré du rendu afin de <strong>livrer une application fonctionnelle dans les temps</strong>. Certaines features ont été priorisées en conséquence.</p>
+  </div>
+</div>
+</section>
+
+<!-- ── 18. DONNÉES BIOPHYSIQUES ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Ce qu'il reste à faire</div>
+    <div class="slide-h">Données <span>Biophysiques</span></div>
+  </div>
+  <div class="card">
+    <p>Les composants électroniques n'ont pas été livrés pour fabriquer la balance connectée.</p>
+    <p>Les calculs de <strong>masse graisseuse, musculaire et d'eau</strong> relèvent de la bioimpédancemétrie — l'équipe a préféré concentrer ses efforts sur d'autres aspects de l'application.</p>
+  </div>
+</div>
+</section>
+
+<!-- ── 19. PLUS D'EXERCICES IA ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Évolution</div>
+    <div class="slide-h">Plus d'Exercices <span>IA</span></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;">État actuel</p>
+      <p>Les exercices les plus connus et accessibles ont été implémentés en priorité pour le coach IA.</p>
+    </div>
+    <div class="card">
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;">Objectif</p>
+      <p>Étoffer la <strong>bibliothèque d'exercices coaching IA</strong> avec un catalogue plus large, varié et adapté à tous niveaux.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── 20. CONTINUITÉ IA ── -->
+<section>
+<div class="s">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="chip">Vision long terme</div>
+    <div class="slide-h">Continuité <span>IA</span></div>
+  </div>
+  <div class="card">
+    <p>Une fois la bibliothèque enrichie, l'IA pourra s'adapter à l'ensemble d'un programme d'entraînement et agir comme un <strong>coach physique complet</strong> :</p>
+    <ul>
+      <li>Gestion automatique des temps de repos</li>
+      <li>Comptage intelligent des répétitions</li>
+      <li>Vérification de la qualité de chaque mouvement</li>
+      <li>Adaptation en temps réel au niveau et à la fatigue</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- ── 21. DEMO ── -->
+<section>
+<div class="s slide-divider">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <div style="text-align:center;position:relative;z-index:2;">
+    <div class="demo-badge">DEMO</div>
+  </div>
+</div>
+</section>
+
+<!-- ── 22. MERCI ── -->
+<section>
+<div class="s slide-merci">
+  <div class="orb orb-1" style="opacity:.5;width:500px;height:500px;top:-150px;left:-100px;"></div>
+  <div class="orb orb-2" style="opacity:.4;width:400px;height:400px;"></div>
+  <div class="orb orb-3" style="opacity:.3;"></div>
+  <h1 class="merci-h">Merci !</h1>
+</div>
+</section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  controls: true,
+  progress: true,
+  slideNumber: 'c/t',
+  transition: 'fade',
+  transitionSpeed: 'slow',
+  backgroundTransition: 'fade',
+  width: 1280,
+  height: 720,
+  margin: 0,
+  minScale: 0.2,
+  maxScale: 2.0,
+});
+</script>
+</body>
+</html>
