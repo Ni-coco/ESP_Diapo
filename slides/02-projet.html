@@ -64,7 +64,7 @@
   <div class="ia-split">
     <!-- LEFT: Skeleton SVG -->
     <div class="ia-skeleton-card">
-      <div class="ia-sk-label">33 landmarks détectés</div>
+      <div class="ia-sk-label">Detection temps reel</div>
       <svg class="ia-skeleton" viewBox="0 0 220 360" xmlns="http://www.w3.org/2000/svg">
         <!-- Connections (lines between landmarks) -->
         <g stroke="rgba(167,139,250,.55)" stroke-width="2" stroke-linecap="round" fill="none">
@@ -146,26 +146,35 @@
           <text x="58" y="262" font-family="Outfit" font-size="11" fill="#86efac" font-weight="700">95°</text>
         </g>
       </svg>
-      <div class="ia-sk-foot">Squelette détecté en temps réel</div>
+      <div class="ia-sk-foot">33 points du corps suivis en continu</div>
     </div>
 
-    <!-- RIGHT: explanation -->
-    <div class="ia-info">
-      <div class="ia-info-block">
-        <div class="ia-info-k">Qu'est-ce que c'est ?</div>
-        <p><strong>MediaPipe Pose Landmarker</strong> est un modèle de vision par ordinateur <strong>open-source</strong> développé par <strong>Google AI Edge</strong>.</p>
+    <!-- RIGHT: mirrored cards -->
+    <div class="ia-mirror">
+      <div class="ia-mirror-card">
+        <div class="ia-info-k">Ce que voit l'IA</div>
+        <ul>
+          <li>Base technique : MediaPipe Pose Landmarker (Google AI Edge)</li>
+          <li>33 landmarks du corps</li>
+          <li>Position + score de confiance</li>
+          <li>Analyse en temps reel</li>
+        </ul>
       </div>
-      <div class="ia-info-block">
-        <div class="ia-info-k">Que fait-il ?</div>
-        <p>Détecte <strong>33 points clés du corps</strong> (épaules, coudes, hanches, genoux…) à <strong>30 fps</strong>, avec un score de confiance par point.</p>
-      </div>
-      <div class="ia-info-pills">
-        <span class="ia-pill">⚡ Temps réel</span>
-        <span class="ia-pill">📱 100% on-device</span>
-        <span class="ia-pill">🔒 Données privées</span>
-        <span class="ia-pill">✈️ Mode avion OK</span>
+      <div class="ia-mirror-card">
+        <div class="ia-info-k">Ce que Mindiff en fait</div>
+        <ul>
+          <li>Calcul des angles articulaires</li>
+          <li>Analyse du mouvement</li>
+          <li>Feedback corrige en direct</li>
+        </ul>
       </div>
     </div>
+  </div>
+  <div class="ia-info-pills ia-pills-wide">
+    <span class="ia-pill">Temps reel</span>
+    <span class="ia-pill">100% on-device</span>
+    <span class="ia-pill">Donnees privees</span>
+    <span class="ia-pill">Mode avion OK</span>
   </div>
 </div>
 </section>
@@ -178,57 +187,56 @@
     <div class="slide-h">Le <span>Pipeline</span> dans Mindiff</div>
   </div>
 
-  <!-- Pipeline 5 steps -->
+  <!-- Pipeline 5 steps (clean cards, no emoji) -->
   <div class="ia-pipeline">
     <div class="ia-step">
-      <div class="ia-step-num">1</div>
-      <div class="ia-step-ico">📷</div>
+      <div class="ia-step-num">01</div>
+      <div class="ia-step-tag">Entrée</div>
       <div class="ia-step-title">Capture</div>
-      <div class="ia-step-desc">Flux caméra Flutter (package <code>camera</code>)</div>
+      <div class="ia-step-desc">Flux camera recu en continu</div>
     </div>
-    <div class="ia-arrow">→</div>
     <div class="ia-step">
-      <div class="ia-step-num">2</div>
-      <div class="ia-step-ico">🧠</div>
+      <div class="ia-step-num">02</div>
+      <div class="ia-step-tag">IA</div>
       <div class="ia-step-title">Détection</div>
-      <div class="ia-step-desc">MediaPipe Pose → 33 landmarks (x, y, confiance)</div>
+      <div class="ia-step-desc">Extraction des 33 landmarks du corps</div>
     </div>
-    <div class="ia-arrow">→</div>
     <div class="ia-step">
-      <div class="ia-step-num">3</div>
-      <div class="ia-step-ico">📐</div>
+      <div class="ia-step-num">03</div>
+      <div class="ia-step-tag">Calcul</div>
       <div class="ia-step-title">Calcul</div>
-      <div class="ia-step-desc">Angles articulaires (genou, hanche, coude…)</div>
+      <div class="ia-step-desc">Angles articulaires calcules</div>
     </div>
-    <div class="ia-arrow">→</div>
     <div class="ia-step">
-      <div class="ia-step-num">4</div>
-      <div class="ia-step-ico">🔄</div>
+      <div class="ia-step-num">04</div>
+      <div class="ia-step-tag">Logique</div>
       <div class="ia-step-title">Analyse</div>
-      <div class="ia-step-desc">Machine à états : phase + comptage des reps</div>
+      <div class="ia-step-desc">Etat du mouvement et comptage</div>
     </div>
-    <div class="ia-arrow">→</div>
     <div class="ia-step">
-      <div class="ia-step-num">5</div>
-      <div class="ia-step-ico">🔊</div>
+      <div class="ia-step-num">05</div>
+      <div class="ia-step-tag">Sortie</div>
       <div class="ia-step-title">Feedback</div>
-      <div class="ia-step-desc">Squelette + conseils vocaux (TTS)</div>
+      <div class="ia-step-desc">Correction affichee en direct</div>
     </div>
   </div>
 
-  <!-- Bottom: integration footer -->
-  <div class="ia-foot">
-    <div class="ia-foot-block">
-      <div class="ia-foot-k">Intégration Flutter</div>
-      <div class="ia-foot-v">package <code>google_mlkit_pose_detection</code></div>
+  <div class="ia-pipeline-result">
+    Resultat : boucle IA temps reel integree a l'experience utilisateur
+  </div>
+
+  <div class="ia-meta">
+    <div class="ia-meta-card">
+      <div class="ia-meta-k">Integration mobile</div>
+      <div class="ia-meta-v">Integre nativement dans l'application Flutter</div>
     </div>
-    <div class="ia-foot-block">
-      <div class="ia-foot-k">Exercices supportés</div>
-      <div class="ia-foot-v">9 analyseurs · Squat · Pompe · Planche · Curl…</div>
+    <div class="ia-meta-card">
+      <div class="ia-meta-k">Exercices pris en charge</div>
+      <div class="ia-meta-v">9 analyses disponibles (squat, pompe, planche, curl...)</div>
     </div>
-    <div class="ia-foot-block">
-      <div class="ia-foot-k">Filtre qualité</div>
-      <div class="ia-foot-v">Confiance &gt; 70% sur points clés</div>
+    <div class="ia-meta-card">
+      <div class="ia-meta-k">Fiabilite de l'analyse</div>
+      <div class="ia-meta-v">Validation uniquement quand les points cles sont assez fiables</div>
     </div>
   </div>
 </div>
