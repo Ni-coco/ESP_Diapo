@@ -18,8 +18,8 @@
     </ul></div>
     <div class="card"><ul>
       <li>Balance connectée (mesure corporelle)</li>
-      <li>Caméra intelligente via MediaPipe</li>
-      <li>Application mobile Flutter iOS & Android</li>
+      <li>Caméra intelligente (coaching en direct)</li>
+      <li>Application mobile iOS & Android</li>
     </ul></div>
   </div>
 </div>
@@ -42,201 +42,12 @@
       </ul>
     </div>
     <div class="card">
-      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;">Planification</p>
+      <p style="font-family:'Outfit';font-weight:700;color:var(--purple2);margin-bottom:.4em;">Pour l'utilisateur</p>
       <ul>
-        <li>Choix du matériel électronique</li>
-        <li>Réalisation du schéma électrique</li>
-        <li>Câblage et assemblage</li>
-        <li>Développement communication balance ↔ app</li>
+        <li>Pesée automatique à chaque séance</li>
+        <li>Données synchronisées avec son profil</li>
+        <li>Suivi de l'évolution corporelle dans le temps</li>
       </ul>
-    </div>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="s camera-connectee-slide">
-  <div class="orb orb-1"></div><div class="orb orb-2"></div>
-  <div style="position:relative;z-index:1;">
-    <div class="chip">Composant IA · 1/2</div>
-    <div class="slide-h">Caméra <span>Connectée</span></div>
-  </div>
-  <div class="ia-split">
-    <!-- LEFT: Skeleton SVG -->
-    <div class="ia-skeleton-card">
-      <div class="ia-sk-label">Detection temps reel</div>
-      <svg class="ia-skeleton" viewBox="0 0 220 360" xmlns="http://www.w3.org/2000/svg">
-        <!-- Connections (lines between landmarks) -->
-        <g stroke="rgba(167,139,250,.55)" stroke-width="2" stroke-linecap="round" fill="none">
-          <!-- Face -->
-          <line x1="100" y1="42" x2="120" y2="42"/>
-          <!-- Shoulders -->
-          <line x1="75" y1="95" x2="145" y2="95"/>
-          <!-- Torso -->
-          <line x1="75" y1="95" x2="80" y2="180"/>
-          <line x1="145" y1="95" x2="140" y2="180"/>
-          <line x1="80" y1="180" x2="140" y2="180"/>
-          <!-- Left arm -->
-          <line x1="75" y1="95" x2="55" y2="150"/>
-          <line x1="55" y1="150" x2="50" y2="210"/>
-          <line x1="50" y1="210" x2="45" y2="240"/>
-          <!-- Right arm -->
-          <line x1="145" y1="95" x2="165" y2="150"/>
-          <line x1="165" y1="150" x2="170" y2="210"/>
-          <line x1="170" y1="210" x2="175" y2="240"/>
-          <!-- Left leg -->
-          <line x1="80" y1="180" x2="78" y2="260"/>
-          <line x1="78" y1="260" x2="75" y2="330"/>
-          <!-- Right leg -->
-          <line x1="140" y1="180" x2="142" y2="260"/>
-          <line x1="142" y1="260" x2="145" y2="330"/>
-        </g>
-        <!-- Head -->
-        <circle cx="110" cy="32" r="22" fill="rgba(167,139,250,.10)" stroke="rgba(167,139,250,.55)" stroke-width="2"/>
-        <!-- Landmarks (33 points) -->
-        <g fill="#c4b5fd">
-          <!-- Face: nose, eyes, ears, mouth -->
-          <circle cx="110" cy="28" r="2.5"/>
-          <circle cx="103" cy="22" r="2.5"/>
-          <circle cx="117" cy="22" r="2.5"/>
-          <circle cx="98" cy="24" r="2.5"/>
-          <circle cx="122" cy="24" r="2.5"/>
-          <circle cx="90" cy="32" r="2.5"/>
-          <circle cx="130" cy="32" r="2.5"/>
-          <circle cx="100" cy="42" r="2.5"/>
-          <circle cx="120" cy="42" r="2.5"/>
-          <circle cx="106" cy="48" r="2.5"/>
-          <circle cx="114" cy="48" r="2.5"/>
-          <!-- Shoulders -->
-          <circle cx="75" cy="95" r="3.5" fill="#a78bfa"/>
-          <circle cx="145" cy="95" r="3.5" fill="#a78bfa"/>
-          <!-- Elbows -->
-          <circle cx="55" cy="150" r="3.5" fill="#a78bfa"/>
-          <circle cx="165" cy="150" r="3.5" fill="#a78bfa"/>
-          <!-- Wrists -->
-          <circle cx="50" cy="210" r="3.5" fill="#a78bfa"/>
-          <circle cx="170" cy="210" r="3.5" fill="#a78bfa"/>
-          <!-- Pinky / Index / Thumb (left) -->
-          <circle cx="42" cy="232" r="2.5"/>
-          <circle cx="48" cy="245" r="2.5"/>
-          <circle cx="45" cy="240" r="2.5"/>
-          <!-- Pinky / Index / Thumb (right) -->
-          <circle cx="178" cy="232" r="2.5"/>
-          <circle cx="172" cy="245" r="2.5"/>
-          <circle cx="175" cy="240" r="2.5"/>
-          <!-- Hips -->
-          <circle cx="80" cy="180" r="3.5" fill="#a78bfa"/>
-          <circle cx="140" cy="180" r="3.5" fill="#a78bfa"/>
-          <!-- Knees -->
-          <circle cx="78" cy="260" r="3.5" fill="#a78bfa"/>
-          <circle cx="142" cy="260" r="3.5" fill="#a78bfa"/>
-          <!-- Ankles -->
-          <circle cx="75" cy="330" r="3.5" fill="#a78bfa"/>
-          <circle cx="145" cy="330" r="3.5" fill="#a78bfa"/>
-          <!-- Heel + Foot index (left) -->
-          <circle cx="68" cy="345" r="2.5"/>
-          <circle cx="82" cy="348" r="2.5"/>
-          <!-- Heel + Foot index (right) -->
-          <circle cx="152" cy="345" r="2.5"/>
-          <circle cx="138" cy="348" r="2.5"/>
-        </g>
-        <!-- Angle indicator on knee (squat example) -->
-        <g>
-          <path d="M 80 235 A 18 18 0 0 0 78 280" stroke="#86efac" stroke-width="2" fill="none"/>
-          <text x="58" y="262" font-family="Outfit" font-size="11" fill="#86efac" font-weight="700">95°</text>
-        </g>
-      </svg>
-      <div class="ia-sk-foot">33 points du corps suivis en continu</div>
-    </div>
-
-    <!-- RIGHT: mirrored cards -->
-    <div class="ia-mirror">
-      <div class="ia-mirror-card">
-        <div class="ia-info-k">Ce que voit l'IA</div>
-        <ul>
-          <li>Base technique : MediaPipe Pose Landmarker (Google AI Edge)</li>
-          <li>33 landmarks du corps</li>
-          <li>Position + score de confiance</li>
-          <li>Analyse en temps reel</li>
-        </ul>
-      </div>
-      <div class="ia-mirror-card">
-        <div class="ia-info-k">Ce que Mindiff en fait</div>
-        <ul>
-          <li>Calcul des angles articulaires</li>
-          <li>Analyse du mouvement</li>
-          <li>Feedback corrige en direct</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="ia-info-pills ia-pills-wide">
-    <span class="ia-pill">Temps reel</span>
-    <span class="ia-pill">100% on-device</span>
-    <span class="ia-pill">Donnees privees</span>
-    <span class="ia-pill">Mode avion OK</span>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="s application-mobile-slide">
-  <div class="orb orb-1"></div><div class="orb orb-3"></div>
-  <div style="position:relative;z-index:1;">
-    <div class="chip">Composant IA · 2/2</div>
-    <div class="slide-h">Le <span>Pipeline</span> dans Mindiff</div>
-  </div>
-
-  <!-- Pipeline 5 steps (clean cards, no emoji) -->
-  <div class="ia-pipeline">
-    <div class="ia-step">
-      <div class="ia-step-num">01</div>
-      <div class="ia-step-tag">Entrée</div>
-      <div class="ia-step-title">Capture</div>
-      <div class="ia-step-desc">Flux camera recu en continu</div>
-    </div>
-    <div class="ia-step">
-      <div class="ia-step-num">02</div>
-      <div class="ia-step-tag">IA</div>
-      <div class="ia-step-title">Détection</div>
-      <div class="ia-step-desc">Extraction des 33 landmarks du corps</div>
-    </div>
-    <div class="ia-step">
-      <div class="ia-step-num">03</div>
-      <div class="ia-step-tag">Calcul</div>
-      <div class="ia-step-title">Calcul</div>
-      <div class="ia-step-desc">Angles articulaires calcules</div>
-    </div>
-    <div class="ia-step">
-      <div class="ia-step-num">04</div>
-      <div class="ia-step-tag">Logique</div>
-      <div class="ia-step-title">Analyse</div>
-      <div class="ia-step-desc">Etat du mouvement et comptage</div>
-    </div>
-    <div class="ia-step">
-      <div class="ia-step-num">05</div>
-      <div class="ia-step-tag">Sortie</div>
-      <div class="ia-step-title">Feedback</div>
-      <div class="ia-step-desc">Correction affichee en direct</div>
-    </div>
-  </div>
-
-  <div class="ia-pipeline-result">
-    Resultat : boucle IA temps reel integree a l'experience utilisateur
-  </div>
-
-  <div class="ia-meta">
-    <div class="ia-meta-card">
-      <div class="ia-meta-k">Integration mobile</div>
-      <div class="ia-meta-v">Integre nativement dans l'application Flutter</div>
-    </div>
-    <div class="ia-meta-card">
-      <div class="ia-meta-k">Exercices pris en charge</div>
-      <div class="ia-meta-v">9 analyses disponibles (squat, pompe, planche, curl...)</div>
-    </div>
-    <div class="ia-meta-card">
-      <div class="ia-meta-k">Fiabilite de l'analyse</div>
-      <div class="ia-meta-v">Validation uniquement quand les points cles sont assez fiables</div>
     </div>
   </div>
 </div>
