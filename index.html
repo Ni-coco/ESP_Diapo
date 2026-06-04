@@ -147,7 +147,7 @@
 /* ── LISTS ── */
 .card ul { list-style: none; padding: 0; margin: .5em 0 0 0; }
 .card ul li {
-  font-size: 1em;
+  font-size: 1.15em;
   color: var(--text2);
   padding: .35em 0;
   border-bottom: 1px solid rgba(0,0,0,.06);
@@ -158,42 +158,11 @@
 }
 .card ul li:last-child { border: none; }
 .card ul li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--purple); margin-top: .5em; flex-shrink: 0; }
-.card p { font-size: .95em; color: var(--text2); line-height: 1.65; margin: .3em 0; }
+.card p { font-size: 1.2em; color: var(--text2); line-height: 1.65; margin: .3em 0; }
 .card strong { color: var(--purple2); font-weight: 600; }
 
-/* Slide: Le Projet Mindiff */
-.projet-mindiff-slide .card p {
-  font-size: 1.2em;
-}
-.projet-mindiff-slide .card ul li {
-  font-size: 1.15em;
-}
-.balance-connectee-slide .card p {
-  font-size: 1.2em;
-}
-.balance-connectee-slide .card ul li {
-  font-size: 1.15em;
-}
-.camera-connectee-slide .card p {
-  font-size: 1.2em;
-}
-.camera-connectee-slide .card ul li,
+/* IA slides (when present in projet) */
 .camera-connectee-slide .ia-mirror-card li {
-  font-size: 1.15em;
-}
-.application-mobile-slide .card p {
-  font-size: 1.2em;
-}
-.application-mobile-slide .card ul li {
-  font-size: 1.15em;
-}
-.notre-equipe-slide .card p,
-.notre-equipe-slide .pole-sub,
-.notre-equipe-slide .m-pill {
-  font-size: 1.2em;
-}
-.notre-equipe-slide .card ul li,
-.notre-equipe-slide .pole-title {
   font-size: 1.15em;
 }
 
@@ -300,7 +269,7 @@
   opacity: .8;
 }
 .som-label {
-  font-size: 1em;
+  font-size: 1.15em;
   color: var(--text2);
   font-weight: 500;
   text-transform: uppercase;
@@ -382,7 +351,7 @@
   border: 1px solid rgba(109,88,232,.2);
   color: rgba(30,27,75,.82);
   font-weight: 600;
-  font-size: .98em;
+  font-size: 1.15em;
 }
 .m-pill-ghost {
   border-style: dashed;
@@ -440,12 +409,12 @@
   font-weight: 800;
   letter-spacing: -.03em;
   color: var(--accent);
-  font-size: 1.05em;
+  font-size: 1.15em;
 }
 .pole-sub {
   margin-top: 3px;
   color: var(--muted);
-  font-size: .88em;
+  font-size: 1.2em;
 }
 .pole-members {
   display: flex;
@@ -575,7 +544,7 @@
 .rtable {
   width: 100%;
   border-collapse: collapse;
-  font-size: .95em;
+  font-size: 1.1em;
   position: relative;
   z-index: 1;
 }
@@ -590,7 +559,7 @@
   color: var(--purple2);
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
-  font-size: 1.12em;
+  font-size: 1.2em;
   padding: .9em 1.08em;
   text-align: left;
   border-bottom: 1px solid var(--border);
@@ -606,7 +575,7 @@
   line-height: 1.55;
 }
 .rtable tbody tr:hover td { background: rgba(167,139,250,.05); }
-.bd { display: inline-block; padding: .15em .55em; border-radius: 6px; font-weight: 600; font-size: .9em; }
+.bd { display: inline-block; padding: .15em .55em; border-radius: 6px; font-weight: 600; font-size: 1em; }
 .bd-h { background: rgba(239,68,68,.1); color: #b91c1c; border: 1px solid rgba(239,68,68,.25); }
 .bd-m { background: rgba(251,191,36,.15); color: #92400e; border: 1px solid rgba(251,191,36,.3); }
 .bd-l { background: rgba(52,211,153,.15); color: #065f46; border: 1px solid rgba(52,211,153,.3); }
@@ -617,7 +586,7 @@
 .ctable {
   width: 100%;
   border-collapse: collapse;
-  font-size: .95em;
+  font-size: 1.1em;
   position: relative;
   z-index: 1;
 }
@@ -626,7 +595,7 @@
   color: var(--purple2);
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
-  font-size: 1.1em;
+  font-size: 1.2em;
   padding: .9em 1.08em;
   text-align: center;
   border-bottom: 1px solid var(--border);
@@ -689,7 +658,7 @@
 }
 .adv-item p {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.02em;
+  font-size: 1.15em;
   font-weight: 700;
   color: var(--purple2);
   line-height: 1.35;
@@ -714,7 +683,7 @@
 }
 .jur-problem h4 {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.02em;
+  font-size: 1.2em;
   font-weight: 800;
   color: #b91c1c;
   margin-bottom: .6em;
@@ -727,14 +696,14 @@
 }
 .jur-solution h4 {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.02em;
+  font-size: 1.2em;
   font-weight: 800;
   color: #065f46;
   margin-bottom: .6em;
 }
 .jur-problem ul, .jur-solution ul { list-style: none; padding: 0; }
 .jur-problem ul li, .jur-solution ul li {
-  font-size: .92em;
+  font-size: 1.15em;
   color: var(--text2);
   padding: .35em 0;
   border-bottom: 1px solid rgba(0,0,0,.06);
@@ -862,7 +831,7 @@
   position: relative;
   z-index: 1;
   color: var(--text2);
-  font-size: 1em;
+  font-size: 1.15em;
   margin-top: -.2em;
 }
 .deploy-flow {
@@ -939,14 +908,14 @@
 .deploy-card h4 {
   margin-top: .6em;
   font-family: 'Outfit', sans-serif;
-  font-size: 1.06em;
+  font-size: 1.2em;
   font-weight: 800;
   color: var(--accent);
 }
 .deploy-card p {
   margin-top: .45em;
   color: var(--text2);
-  font-size: .93em;
+  font-size: 1.15em;
   line-height: 1.45;
 }
 .deploy-banner {
@@ -959,7 +928,7 @@
   background: linear-gradient(135deg, rgba(167,139,250,.14), rgba(124,111,205,.06));
   color: var(--purple2);
   font-family: 'Outfit', sans-serif;
-  font-size: .95em;
+  font-size: 1.15em;
   font-weight: 700;
   text-align: center;
 }
@@ -1029,7 +998,7 @@
   padding: 0;
 }
 .roadmap-card ul li {
-  font-size: .92em;
+  font-size: 1.15em;
   line-height: 1.4;
   color: var(--text2);
   padding: .22em 0;
@@ -1216,12 +1185,12 @@
   padding: 1.6em 1.8em;
 }
 .meth-card h3 { font-family:'Outfit';font-size:1.4em;font-weight:800;color:var(--purple2);margin-bottom:.45em; }
-.meth-card p { font-size:1.08em;color:var(--text2);line-height:1.55; }
+.meth-card p { font-size:1.2em;color:var(--text2);line-height:1.55; }
 .meth-plus { font-size:2.9em;font-weight:900;color:var(--purple);opacity:.7;text-align:center; }
 .kanban-mini { display:grid;grid-template-columns:repeat(4,1fr);gap:.4em;margin-top:.7em; }
 .kc { border-radius:8px;padding:.4em .4em; }
-.kc-h { font-family:'Outfit';font-size:1.02em;font-weight:800;text-align:center;margin-bottom:.4em;text-transform:uppercase;letter-spacing:.07em; }
-.kc-card { border-radius:8px;padding:.52em .62em;font-size:.96em;margin-bottom:.34em;color:rgba(30,27,75,.88); }
+.kc-h { font-family:'Outfit';font-size:1.15em;font-weight:800;text-align:center;margin-bottom:.4em;text-transform:uppercase;letter-spacing:.07em; }
+.kc-card { border-radius:8px;padding:.52em .62em;font-size:1.15em;margin-bottom:.34em;color:rgba(30,27,75,.88); }
 .kc-1 { background:rgba(248,113,113,.08); } .kc-1 .kc-h { color:#b91c1c; } .kc-1 .kc-card { background:rgba(248,113,113,.1); }
 .kc-2 { background:rgba(251,191,36,.06); } .kc-2 .kc-h { color:#92400e; } .kc-2 .kc-card { background:rgba(251,191,36,.1); }
 .kc-3 { background:rgba(96,165,250,.07); } .kc-3 .kc-h { color:#1d4ed8; } .kc-3 .kc-card { background:rgba(96,165,250,.1); }
